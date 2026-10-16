@@ -92,7 +92,25 @@ class SusuGroup:
         }
         
     def select_candidate(self):
-        return self.members[self.current_week-1]    
+        return self.members[self.current_week-1]   
+
+    def get_report(self):
+        paid_in_full = []
+        outstanding = {}
+
+        for member in self.members:
+            owed = self.amount_owed(member)
+
+            if owed == 0:
+                paid_in_full.append(member)
+            else:
+                outstanding[member] = owed
+        return {
+            "current_week": self.current_week,
+            "paid_in_full": paid_in_full,
+            "outstanding": outstanding,
+            "payout_history": self.payout_history
+        }            
 
 
 # add_member()
